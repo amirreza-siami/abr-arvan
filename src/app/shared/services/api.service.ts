@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { ToastService } from '../component/toaster/toast-service.service';
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -17,11 +17,11 @@ export class ApiService {
             'Content-Type': 'application/json'
         })
     };
-    storageUserInfoKey: string = 'user-jwt';
+    storageUserInfoKey: string = 'user';
 
     constructor(
         private http: HttpClient,
-        private toastService: ToastService,
+        private toastService: ToastrService,
         private router: Router,
     ) { }
 
@@ -29,7 +29,7 @@ export class ApiService {
 
         if (checkIsAuthenticated) {
             let userInfoString: string | null = localStorage.getItem(this.storageUserInfoKey);
-            if (!userInfoString) return throwError(this.router.navigate(['/login', { rdHref: this.router.url }]));
+            if (!userInfoString || !JSON.parse(userInfoString)['token']) return throwError(this.router.navigate(['/login', { rdHref: this.router.url }]));
         }
 
         return this.http.post<any>(environment.apiUrl + url, parameters, this.httpOptions).pipe(

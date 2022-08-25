@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from "../auth.service";
-import {ToastService} from "../../shared/component/toaster/toast-service.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private authService: AuthService,
-      private toastService: ToastService
+      private toastService: ToastrService
   ) { }
 
   ngOnInit(): void {

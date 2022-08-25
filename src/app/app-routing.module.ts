@@ -5,17 +5,18 @@ import {RegisterComponent} from "./auth/register/register.component";
 
 const routes: Routes = [
 
-    // home page is login
+    // register page
+    { path: 'register', component: RegisterComponent },
+
+    // home page is loginl
     { path: 'login', component: LoginComponent },
-    { path: 'login', component: RegisterComponent },
-    { path: '', component: LoginComponent },
     { path: 'home', component: LoginComponent },
     { path: 'main', component: LoginComponent },
 
     // create 404 page
     { path: '**', component: LoginComponent },
     { path: '404', component: LoginComponent },
-
+    { path: '', component: LoginComponent },
 ];
 
 @NgModule({

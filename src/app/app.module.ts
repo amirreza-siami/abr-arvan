@@ -9,7 +9,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {ApiService} from "./shared/services/api.service";
-import {ToastsContainerComponent} from "./shared/component/toaster/toaster.component";
 import {SharedModule} from "./shared/module/shared.module";
 import { LoadingComponent } from './shared/component/loading/loading.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -18,7 +17,6 @@ import { RegisterComponent } from './auth/register/register.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    ToastsContainerComponent,
     LoadingComponent,
     RegisterComponent
   ],

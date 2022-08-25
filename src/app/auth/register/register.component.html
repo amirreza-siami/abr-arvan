@@ -1,1 +1,68 @@
-<p>register works!</p>
+<div class="align-items-center justify-content-center row g-0 vh-100">
+    <div class="card bg-secondary bg-opacity-25 rounded-1 col-11 col-sm-10 col-lg-8 col-xl-6 col-xxl-4">
+
+        <div class="card-header bg-transparent border-0 text-center text-secondary">
+            <h1>Register</h1>
+        </div>
+
+        <div class="card-body">
+
+            <form [formGroup]="registerFormControl" (ngSubmit)="onSubmitRegisterForm()" role="form">
+
+                <div class="mb-3">
+                    <label for="registerUsername" class="form-label">User</label>
+                    <input [ngClass]="{'is-invalid': registerFormControl.touched && registerFormControl.controls.username.errors}" formControlName="username" type="text" class="form-control" id="registerUsername">
+
+                    <!--password validation -- start -->
+                    <div *ngIf="registerFormControl.controls.password.errors && registerFormControl.controls.password.errors['required']" class="invalid-feedback">
+                        Please enter the user name.
+                    </div>
+                    <!--email validation -- end -->
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="registerEmail" class="form-label">Email</label>
+                    <input [ngClass]="{'is-invalid': registerFormControl.touched && registerFormControl.controls.email.errors}" formControlName="email" type="email" class="form-control" id="registerEmail" placeholder="sample@gmail.com">
+
+                    <!--email validation -- start -->
+                    <div *ngIf="registerFormControl.controls.email.errors && registerFormControl.controls.email.errors['email']" class="invalid-feedback">
+                        Please enter the correct email.
+                    </div>
+
+                    <div *ngIf="registerFormControl.controls.email.errors && registerFormControl.controls.email.errors['required']" class="invalid-feedback">
+                        Please enter the email.
+                    </div>
+                    <!--email validation -- end -->
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="registerPassword" class="form-label">Password</label>
+                    <input [ngClass]="{'is-invalid': registerFormControl.touched && registerFormControl.controls.password.errors}" formControlName="password" type="password" class="form-control" id="registerPassword">
+
+                    <!--password validation -- start -->
+                    <div *ngIf="registerFormControl.controls.password.errors && registerFormControl.controls.password.errors['required']" class="invalid-feedback">
+                        Please enter the password.
+                    </div>
+                    <!--email validation -- end -->
+
+                </div>
+
+                <div class="d-grid pt-3">
+                    <!--<button type="submit" class="btn btn-primary" [disabled]="!registerFormControl.valid">Register</button>-->
+                    <button type="submit" class="btn btn-primary" [disabled]="!registerFormControl.touched">Register</button>
+                </div>
+
+            </form>
+
+            <div class="mt-2">
+                Already Registered? <a class="text-decoration-none text-reset fw-bold" [routerLink]="['/login']">Login</a>
+            </div>
+
+        </div>
+
+        <loading [loading]="loading"></loading>
+
+    </div>
+</div>
