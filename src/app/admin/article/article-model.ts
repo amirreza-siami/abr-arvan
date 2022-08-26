@@ -14,6 +14,8 @@ export interface ArticleModel {
     title: string;
     updatedAt: string;
     author: ArticleAuthorModel;
+    delete?: string;
+    update?: string;
 }
 
 export interface ArticleAuthorModel {

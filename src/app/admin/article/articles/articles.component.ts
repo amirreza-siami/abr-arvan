@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi, ValueFormatterParams } from 'ag-grid-community';
 import {ArticlesService} from "../articles.service";
-import {ArticleApiModel, ArticleModel} from "../article-model";
+import {ArticleApiModel, ArticleAuthorModel, ArticleModel} from "../article-model";
 import {Router} from "@angular/router";
+import {GridDelBtnComponent} from "../../../shared/component/grid-del-btn/grid-del-btn.component";
 
 @Component({
   selector: 'app-articles',
@@ -40,6 +41,18 @@ export class ArticlesComponent implements OnInit {
             field: 'createdAt',
             headerName: 'Created',
             width: 200,
+        },
+        {
+            field: 'delete',
+            headerName: '',
+            width: 100,
+            cellRenderer: GridDelBtnComponent,
+            cellRendererParams: {
+                clicked: function (field: any) {
+                    console.log(field)
+                    this.gridApi?.applyTransaction({ remove: [field] });
+                },
+            },
         },
     ];
     articles: ArticleModel[] = new Array<ArticleModel>();

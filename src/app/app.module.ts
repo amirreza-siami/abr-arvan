@@ -12,12 +12,14 @@ import {ApiService} from "./shared/services/api.service";
 import {SharedModule} from "./shared/module/shared.module";
 import { RegisterComponent } from './auth/register/register.component';
 import {JwtInterceptor} from "./shared/services/JwtInterceptor";
+import { GridDelBtnComponent } from './shared/component/grid-del-btn/grid-del-btn.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
+    GridDelBtnComponent,
   ],
   imports: [
     BrowserModule,

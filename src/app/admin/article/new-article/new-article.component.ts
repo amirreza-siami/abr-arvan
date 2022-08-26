@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {ArticlesService} from "../articles.service";
 import {TagsApiModel, TagsModel, AddArticleApiModel} from "../article-model";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-article',
@@ -22,7 +24,9 @@ export class NewArticleComponent implements OnInit {
     @ViewChild('newTagInput', {static: true}) newTagInput: ElementRef | undefined;
 
   constructor(
-      private articlesService: ArticlesService
+      private articlesService: ArticlesService,
+      private toastService: ToastrService,
+      private router: Router
   ) {
 
       this.getAllTags();
@@ -76,7 +80,8 @@ export class NewArticleComponent implements OnInit {
         });
 
         this.articlesService.addArticles(articleToAdd).subscribe((result: any) => {
-            console.log(result)
+            this.toastService.success("Well done! Article created successfuly");
+            this.router.navigate(["articles"])
         });
     }
 
