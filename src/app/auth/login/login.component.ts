@@ -32,12 +32,10 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(this.loginFormControl.controls.email.value, this.loginFormControl.controls.password.value).subscribe((result) => {
           this.loading = false;
-          console.log(result);
       }, (error) => {
           this.loading = false;
           this.toastService.error("Login Failed!  User name and/or Password is invalid")
       });
-      console.log(this.loginFormControl);
   }
 
 }

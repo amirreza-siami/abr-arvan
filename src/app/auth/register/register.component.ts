@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
         this.loading = true;
 
         this.authService.registerUser(this.registerFormControl.controls.username.value, this.registerFormControl.controls.email.value, this.registerFormControl.controls.password.value).subscribe((result) => {
-            if(this.authService.saveUserInfo(result["user"])) this.router.navigate(['/dashboard']);
+            if(this.authService.saveUserInfo(result["user"])) this.router.navigate(['/articles']);
             this.loading = false;
         }, (error) => {
 

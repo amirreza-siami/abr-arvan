@@ -37,6 +37,42 @@ export class ApiService {
         );
     }
 
+    put(url: string, parameters: {}[] | {}, checkIsAuthenticated: boolean = true): Observable<any> {
+
+        if (checkIsAuthenticated) {
+            let userInfoString: string | null = localStorage.getItem(this.storageUserInfoKey);
+            if (!userInfoString || !JSON.parse(userInfoString)['token']) return throwError(this.router.navigate(['/login', { rdHref: this.router.url }]));
+        }
+
+        return this.http.put<any>(environment.apiUrl + url, parameters, this.httpOptions).pipe(
+            catchError(resultError => { return this.catchErrorHandler(resultError); })
+        );
+    }
+
+    get(url: string, checkIsAuthenticated: boolean = true): Observable<any> {
+
+        if (checkIsAuthenticated) {
+            let userInfoString: string | null = localStorage.getItem(this.storageUserInfoKey);
+            if (!userInfoString || !JSON.parse(userInfoString)['token']) return throwError(this.router.navigate(['/login', { rdHref: this.router.url }]));
+        }
+
+        return this.http.get<any>(environment.apiUrl + url, this.httpOptions).pipe(
+            catchError(resultError => { return this.catchErrorHandler(resultError); })
+        );
+    }
+
+    delete(url: string, parameters: {}[] | {}): Observable<any> {
+
+        let newHttpOption = {
+            headers: this.httpOptions.headers,
+            body: parameters
+        };
+        return this.http.delete<any>(environment.apiUrl + url, newHttpOption).pipe(
+            catchError(resultError => { return this.catchErrorHandler(resultError); })
+        );
+    }
+
+
     catchErrorHandler(resultError: any) {
 
         if (resultError.status === 401) {

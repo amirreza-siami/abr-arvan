@@ -1,0 +1,12 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="#">Arvan Challenge</a>
+
+        <div class="d-flex justify-content-between w-100">
+            <div *ngIf="user && user.username" class="text-white-50 small">Welcome {{user.username}}</div>
+            <button *ngIf="user && user.token" (click)="onCliCkLogout()" class="btn btn-outline-info">Logout</button>
+        </div>
+
+    </div>
+</nav>

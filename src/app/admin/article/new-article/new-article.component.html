@@ -1,0 +1,62 @@
+<h1 class="my-4">
+    New Article
+</h1>
+
+<form [formGroup]="articleFormControl" (ngSubmit)="onSubmitArticleForm()" role="form">
+    <div class="row">
+        <div class="col-8">
+
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input [ngClass]="{'is-invalid': articleFormControl.touched && articleFormControl.controls.title.errors}" formControlName="title" type="text" class="form-control" id="title">
+
+                    <!--email validation -- start -->
+                    <div *ngIf="articleFormControl.controls.title.errors && articleFormControl.controls.title.errors['required']" class="invalid-feedback">
+                        Please enter the title.
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <input formControlName="description" type="text" class="form-control" id="description">
+                </div>
+
+                <div class="mb-3">
+                    <label for="body" class="form-label">Body</label>
+                    <textarea [ngClass]="{'is-invalid': articleFormControl.touched && articleFormControl.controls.body.errors}" formControlName="body" class="form-control" id="body" rows="3"></textarea>
+
+                    <!--body validation -- start -->
+                    <div *ngIf="articleFormControl.controls.body.errors && articleFormControl.controls.body.errors['required']" class="invalid-feedback">
+                        Please enter the body.
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="!loading && (!articleFormControl.touched || !articleFormControl.valid)">Submit</button>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="mb-3">
+                <label for="addTag" class="form-label">Tags</label>
+                <input #newTagInput type="text" class="form-control" id="addTag" (keyup.enter)="addNewTag()">
+            </div>
+
+            <div class="card">
+                <div class="card-body" formArrayName="tags">
+
+                    <div *ngFor="let tag of tags" class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="{{tag.text}}" [checked]="tag.active" (change)="checkTag(tag, $event)" >
+                        <label class="form-check-label" for="{{tag.text}}">{{tag.text}}</label>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<loading [loading]="loading"></loading>
