@@ -4,7 +4,8 @@
         <a class="navbar-brand" href="#">Arvan Challenge</a>
 
         <div class="d-flex justify-content-between w-100">
-            <div *ngIf="user && user.username" class="text-white-50 small">Welcome {{user.username}}</div>
+            <div *ngIf="user && user.username" class="d-flex align-items-center text-white-50 small">Welcome
+                {{user.username}}</div>
             <button *ngIf="user && user.token" (click)="onCliCkLogout()" class="btn btn-outline-info">Logout</button>
         </div>
 

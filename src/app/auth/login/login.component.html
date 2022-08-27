@@ -11,14 +11,19 @@
 
                 <div class="mb-3">
                     <label for="loginEmail" class="form-label">Email</label>
-                    <input [ngClass]="{'is-invalid': loginFormControl.touched && loginFormControl.controls.email.errors}" formControlName="email" type="email" class="form-control" id="loginEmail" placeholder="sample@gmail.com">
+                    <input
+                        [ngClass]="{'is-invalid': loginFormControl.touched && loginFormControl.controls.email.errors}"
+                        formControlName="email" type="email" class="form-control" id="loginEmail"
+                        placeholder="sample@gmail.com">
 
                     <!--email validation -- start -->
-                    <div *ngIf="loginFormControl.controls.email.errors && loginFormControl.controls.email.errors['email']" class="invalid-feedback">
+                    <div *ngIf="loginFormControl.controls.email.errors && loginFormControl.controls.email.errors['email']"
+                        class="invalid-feedback">
                         Please enter the correct email.
                     </div>
 
-                    <div *ngIf="loginFormControl.controls.email.errors && loginFormControl.controls.email.errors['required']" class="invalid-feedback">
+                    <div *ngIf="loginFormControl.controls.email.errors && loginFormControl.controls.email.errors['required']"
+                        class="invalid-feedback">
                         Please enter the email.
                     </div>
                     <!--email validation -- end -->
@@ -27,10 +32,13 @@
 
                 <div class="mb-3">
                     <label for="loginPassword" class="form-label">Password</label>
-                    <input [ngClass]="{'is-invalid': loginFormControl.touched && loginFormControl.controls.password.errors}" formControlName="password" type="password" class="form-control" id="loginPassword">
+                    <input
+                        [ngClass]="{'is-invalid': loginFormControl.touched && loginFormControl.controls.password.errors}"
+                        formControlName="password" type="password" class="form-control" id="loginPassword">
 
                     <!--password validation -- start -->
-                    <div *ngIf="loginFormControl.controls.password.errors && loginFormControl.controls.password.errors['required']" class="invalid-feedback">
+                    <div *ngIf="loginFormControl.controls.password.errors && loginFormControl.controls.password.errors['required']"
+                        class="invalid-feedback">
                         Please enter the password.
                     </div>
                     <!--email validation -- end -->
@@ -38,14 +46,14 @@
                 </div>
 
                 <div class="d-grid pt-3">
-                    <!--<button type="submit" class="btn btn-primary" [disabled]="!loginFormControl.valid">Login</button>-->
-                    <button type="submit" class="btn btn-primary" [disabled]="!loginFormControl.touched">Login</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
                 </div>
 
             </form>
 
             <div class="mt-2">
-                Don’t have account? <a class="text-decoration-none text-reset fw-bold" [routerLink]="['/register']">Register Now</a>
+                Don’t have account? <a class="text-decoration-none text-reset fw-bold"
+                    [routerLink]="['/register']">Register Now</a>
             </div>
 
         </div>

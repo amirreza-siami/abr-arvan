@@ -6,13 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {ApiService} from "./shared/services/api.service";
-import {SharedModule} from "./shared/module/shared.module";
+import { ApiService } from "./shared/services/api.service";
+import { SharedModule } from "./shared/module/shared.module";
 import { RegisterComponent } from './auth/register/register.component';
-import {JwtInterceptor} from "./shared/services/JwtInterceptor";
+import { JwtInterceptor } from "./shared/services/JwtInterceptor";
 import { GridDelBtnComponent } from './shared/component/grid-del-btn/grid-del-btn.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,11 +29,12 @@ import { GridDelBtnComponent } from './shared/component/grid-del-btn/grid-del-bt
     FormsModule,
     NgbModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule
   ],
   providers: [
-      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-      ApiService
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    ApiService
   ],
   bootstrap: [AppComponent]
 })
