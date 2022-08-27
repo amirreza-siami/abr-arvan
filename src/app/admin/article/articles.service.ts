@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {ApiService} from "../../shared/services/api.service";
+import { ApiService } from "../../shared/services/api.service";
 import { Observable } from 'rxjs';
-import {AddArticleApiModel, TagsApiModel} from "./article-model";
+import { AddArticleApiModel, ArticleModel, TagsApiModel } from "./article-model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +12,23 @@ export class ArticlesService {
   tagsControllerUrl = "tags/";
 
   constructor(
-      private apiService: ApiService
+    private apiService: ApiService
   ) { }
 
-  getArticles(): Observable<any>{
+  getArticles(): Observable<any> {
     return this.apiService.get(this.articlesControllerUrl)
   }
 
-  addArticles(article: AddArticleApiModel): Observable<any>{
-    return this.apiService.post(this.articlesControllerUrl, {article: article})
+  addArticles(article: AddArticleApiModel): Observable<any> {
+    return this.apiService.post(this.articlesControllerUrl, { article: article })
   }
 
-    getAllTags(): Observable<TagsApiModel>{
-        return this.apiService.get(this.tagsControllerUrl)
-    }
+  delArticles(article: ArticleModel): Observable<any> {
+    return this.apiService.delete(this.articlesControllerUrl + article.slug, {})
+  }
+
+  getAllTags(): Observable<TagsApiModel> {
+    return this.apiService.get(this.tagsControllerUrl)
+  }
 
 }

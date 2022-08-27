@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 
 @Component({
-    selector: 'btn-del',
-    template: `
+  selector: 'btn-del',
+  template: `
     <button class="btn btn-sm btn-danger" (click)="btnClickedHandler(content)">Delete</button>
     <ng-template #content let-modal>
   <div class="modal-header">
@@ -22,25 +22,26 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
   `,
 })
 export class GridDelBtnComponent implements ICellRendererAngularComp {
-    private params: any;
+  private params: any;
 
-    constructor(
-        private modalService: NgbModal
-    ) {}
+  constructor(
+    private modalService: NgbModal
+  ) { }
 
-    agInit(params: any): void {
-        this.params = params;
-    }
+  agInit(params: any): void {
+    this.params = params;
+  }
 
-    btnClickedHandler(event: any) {
-        this.modalService.open(event);
-    }
+  btnClickedHandler(event: any) {
+    this.modalService.open(event);
+  }
 
-    confirmedDelete(){
-        this.params.clicked(this.params.data);
-    }
+  confirmedDelete() {
+    this.params.clicked(this.params);
+    this.modalService.dismissAll();
+  }
 
-    refresh() {
-        return false;
-    }
+  refresh() {
+    return false;
+  }
 }

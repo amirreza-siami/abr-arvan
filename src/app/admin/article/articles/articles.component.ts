@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef, GridApi, ValueFormatterParams } from 'ag-grid-community';
-import {ArticlesService} from "../articles.service";
-import {ArticleApiModel, ArticleAuthorModel, ArticleModel} from "../article-model";
-import {Router} from "@angular/router";
-import {GridDelBtnComponent} from "../../../shared/component/grid-del-btn/grid-del-btn.component";
+import { ColDef, GetRowIdFunc, GetRowIdParams, GridApi, RowDataTransaction, ValueFormatterParams } from 'ag-grid-community';
+import { ArticlesService } from "../articles.service";
+import { ArticleApiModel, ArticleAuthorModel, ArticleModel } from "../article-model";
+import { Router } from "@angular/router";
+import { GridDelBtnComponent } from "../../../shared/component/grid-del-btn/grid-del-btn.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-articles',
-  templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.css']
+    selector: 'app-articles',
+    templateUrl: './articles.component.html',
+    styleUrls: ['./articles.component.css']
 })
 export class ArticlesComponent implements OnInit {
 
@@ -27,7 +28,7 @@ export class ArticlesComponent implements OnInit {
             field: 'tagList',
             headerName: 'Tags',
             width: 300,
-            valueFormatter:(params: ValueFormatterParams) => {
+            valueFormatter: (params: ValueFormatterParams) => {
                 let result: string = "";
                 return params.value.join(",")
             }
@@ -48,9 +49,13 @@ export class ArticlesComponent implements OnInit {
             width: 100,
             cellRenderer: GridDelBtnComponent,
             cellRendererParams: {
-                clicked: function (field: any) {
-                    console.log(field)
-                    this.gridApi?.applyTransaction({ remove: [field] });
+                clicked: (params: any) => {
+                    params.api?.applyTransactionAsync({ remove: [params.data] });
+                    this.articlesService.delArticles(params.data).subscribe((result) => {
+                        this.toastr.success("Delete success");
+                    }, (error) => {
+                        this.toastr.error("Delete failed.")
+                    })
                 },
             },
         },
@@ -59,31 +64,33 @@ export class ArticlesComponent implements OnInit {
     articlesCount: number = 0;
     gridApi: GridApi = new GridApi;
     loading: boolean = false;
+    public getRowId: GetRowIdFunc = (params: GetRowIdParams) => params.data.slug;
 
-  constructor(
-      private articlesService: ArticlesService,
-      private router: Router,
-  ) { }
+    constructor(
+        private articlesService: ArticlesService,
+        private router: Router,
+        private toastr: ToastrService
+    ) { }
 
-  ngOnInit(): void {
-      this.getArticles();
-  }
-
-    onGridReady(event: any){
-      this.gridApi = event.api;
+    ngOnInit(): void {
+        this.getArticles();
     }
 
-    getArticles(): void{
-      this.loading = true;
-      this.articlesService.getArticles().subscribe((result: ArticleApiModel) => {
-          this.articles = result.articles;
-          this.articlesCount = result.articlesCount;
-          this.loading = false;
-      })
+    onGridReady(event: any) {
+        this.gridApi = event.api;
     }
 
-    onChangePagination(event: any): void{
-      this.router.navigate(['/articles/page/' + event.pageIndex])
+    getArticles(): void {
+        this.loading = true;
+        this.articlesService.getArticles().subscribe((result: ArticleApiModel) => {
+            this.articles = result.articles;
+            this.articlesCount = result.articlesCount;
+            this.loading = false;
+        })
+    }
+
+    onChangePagination(event: any): void {
+        this.router.navigate(['/articles/page/' + event.pageIndex])
     }
 
 }
