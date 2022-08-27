@@ -19,6 +19,10 @@ export class ArticlesService {
     return this.apiService.get(this.articlesControllerUrl)
   }
 
+  getArticle(articleSlug: string): Observable<any> {
+    return this.apiService.get(this.articlesControllerUrl + articleSlug)
+  }
+
   addArticles(article: AddArticleApiModel): Observable<any> {
     return this.apiService.post(this.articlesControllerUrl, { article: article })
   }

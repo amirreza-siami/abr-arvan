@@ -15,6 +15,7 @@ import { JwtInterceptor } from "./shared/services/JwtInterceptor";
 import { GridDelBtnComponent } from './shared/component/grid-del-btn/grid-del-btn.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GridEditBtnComponent } from './shared/component/grid-edit-btn/grid-edit-btn.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     RegisterComponent,
     GridDelBtnComponent,
+    GridEditBtnComponent,
   ],
   imports: [
     BrowserModule,

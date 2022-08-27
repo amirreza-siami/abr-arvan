@@ -17,8 +17,10 @@ const routes: Routes = [
   { path: 'main', component: LoginComponent },
 
   // create 404 page
-  { path: '**', component: LoginComponent },
   { path: '404', component: LoginComponent },
+
+  { path: '**', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+
   { path: '', component: LoginComponent },
 ];
 

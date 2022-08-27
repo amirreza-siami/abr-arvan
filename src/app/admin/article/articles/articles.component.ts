@@ -5,6 +5,7 @@ import { ArticleApiModel, ArticleAuthorModel, ArticleModel } from "../article-mo
 import { Router } from "@angular/router";
 import { GridDelBtnComponent } from "../../../shared/component/grid-del-btn/grid-del-btn.component";
 import { ToastrService } from 'ngx-toastr';
+import { GridEditBtnComponent } from 'src/app/shared/component/grid-edit-btn/grid-edit-btn.component';
 
 @Component({
     selector: 'app-articles',
@@ -48,14 +49,21 @@ export class ArticlesComponent implements OnInit {
             headerName: '',
             width: 100,
             cellRenderer: GridDelBtnComponent,
+        },
+        {
+            field: 'edit',
+            headerName: '',
+            width: 100,
+            cellRenderer: GridEditBtnComponent,
             cellRendererParams: {
                 clicked: (params: any) => {
-                    params.api?.applyTransactionAsync({ remove: [params.data] });
-                    this.articlesService.delArticles(params.data).subscribe((result) => {
-                        this.toastr.success("Delete success");
-                    }, (error) => {
-                        this.toastr.error("Delete failed.")
-                    })
+                    console.log('%carticles.component.ts line:70 params', 'color: #007acc;', params);
+                    // params.api?.applyTransactionAsync({ remove: [params.data] });
+                    // this.articlesService.delArticles(params.data).subscribe((result) => {
+                    //     this.toastr.success("Delete success");
+                    // }, (error) => {
+                    //     this.toastr.error("Delete failed.")
+                    // })
                 },
             },
         },
