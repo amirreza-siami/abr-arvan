@@ -7,10 +7,10 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 
 @Component({
     selector: 'app-new-article',
-    templateUrl: './new-article.component.html',
-    styleUrls: ['./new-article.component.css']
+    templateUrl: './article.component.html',
+    styleUrls: ['./article.component.css']
 })
-export class NewArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit {
 
     loading: boolean = false;
     tags: TagsModel[] = new Array<TagsModel>();

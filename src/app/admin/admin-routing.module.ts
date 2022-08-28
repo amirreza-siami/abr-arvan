@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ArticlesComponent } from "./article/articles/articles.component";
 import { AdminComponent } from "./admin/admin.component";
-import { NewArticleComponent } from "./article/new-article/new-article.component";
+import { ArticleComponent } from './article/article/article.component';
 
 const routes: Routes = [
     {
@@ -19,11 +19,11 @@ const routes: Routes = [
             },
             {
                 path: 'create',
-                component: NewArticleComponent,
+                component: ArticleComponent,
             },
             {
                 path: 'edit/:article',
-                component: NewArticleComponent,
+                component: ArticleComponent,
             },
         ]
 
