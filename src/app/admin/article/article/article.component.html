@@ -8,9 +8,8 @@
 
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input
-                    [ngClass]="{'is-invalid': articleFormControl.touched && articleFormControl.controls.title.errors}"
-                    formControlName="title" type="text" class="form-control" id="title">
+                <input [ngClass]="{'is-invalid': articleFormControl.controls.title.errors}" formControlName="title"
+                    type="text" class="form-control" id="title">
 
                 <!--email validation -- start -->
                 <div *ngIf="articleFormControl.controls.title.errors && articleFormControl.controls.title.errors['required']"
@@ -22,14 +21,20 @@
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <input formControlName="description" type="text" class="form-control" id="description">
+                <input [ngClass]="{'is-invalid': articleFormControl.controls.description.errors}"
+                    formControlName="description" type="text" class="form-control" id="description">
+
+                <!--Description validation -- start -->
+                <div *ngIf="articleFormControl.controls.description.errors && articleFormControl.controls.description.errors['required']"
+                    class="invalid-feedback">
+                    Please enter the description.
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="body" class="form-label">Body</label>
-                <textarea
-                    [ngClass]="{'is-invalid': articleFormControl.touched && articleFormControl.controls.body.errors}"
-                    formControlName="body" class="form-control" id="body" rows="3"></textarea>
+                <textarea [ngClass]="{'is-invalid': articleFormControl.controls.body.errors}" formControlName="body"
+                    class="form-control" id="body" rows="3"></textarea>
 
                 <!--body validation -- start -->
                 <div *ngIf="articleFormControl.controls.body.errors && articleFormControl.controls.body.errors['required']"

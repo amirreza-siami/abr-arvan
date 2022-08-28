@@ -16,7 +16,7 @@ export class ArticleComponent implements OnInit {
     tags: TagsModel[] = new Array<TagsModel>();
     articleFormControl = new FormGroup({
         title: new FormControl('', [Validators.required]),
-        description: new FormControl('',),
+        description: new FormControl('', [Validators.required]),
         body: new FormControl('', [Validators.required]),
         tags: new FormArray([]),
     });
@@ -96,7 +96,7 @@ export class ArticleComponent implements OnInit {
                 this.router.navigate(["articles"]);
                 this.loading = false;
             }, (error) => {
-                if (error.message) this.toastService.error(error.message);
+                this.articleFormErrorHandler(error);
                 this.loading = false;
             });
         } else {
@@ -105,7 +105,7 @@ export class ArticleComponent implements OnInit {
                 this.router.navigate(["articles"]);
                 this.loading = false;
             }, (error) => {
-                if (error.message) this.toastService.error(error.message);
+                this.articleFormErrorHandler(error);
                 this.loading = false;
             });
         }
@@ -139,6 +139,39 @@ export class ArticleComponent implements OnInit {
 
             this.loading = false;
         });
+    }
+
+    articleFormErrorHandler(error: any) {
+
+        if (error.message) this.toastService.error(error.message);
+
+        if (error.errors) {
+            const fieldError = error.errors;
+            if (fieldError.description && fieldError.description.length > 0) {
+                fieldError.description.forEach((errorDescription: string) => {
+                    this.toastService.error("Description " + errorDescription);
+                });
+            }
+
+            if (fieldError.body && fieldError.body.length > 0) {
+                fieldError.body.forEach((errorBody: string) => {
+                    this.toastService.error("Body " + errorBody);
+                });
+            }
+
+            if (fieldError.title && fieldError.title.length > 0) {
+                fieldError.title.forEach((errorTitle: string) => {
+                    this.toastService.error("Title " + errorTitle);
+                });
+            }
+
+            if (fieldError.tags && fieldError.tags.length > 0) {
+                fieldError.tags.forEach((errorTags: string) => {
+                    this.toastService.error("Tags " + errorTags);
+                });
+            }
+        }
+
     }
 
 }
