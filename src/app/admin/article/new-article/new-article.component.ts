@@ -20,6 +20,7 @@ export class NewArticleComponent implements OnInit {
         body: new FormControl('', [Validators.required]),
         tags: new FormArray([]),
     });
+    articleSlug: string = "";
 
     @ViewChild('newTagInput', { static: true }) newTagInput: ElementRef | undefined;
 
@@ -37,8 +38,10 @@ export class NewArticleComponent implements OnInit {
     ngOnInit(): void {
 
         this.activatedRoute.params.forEach((params: Params) => {
-            this.loading = true;
-            this.getArticle(params['article']);
+            if (params['article']) {
+                this.articleSlug = params['article'];
+                this.getArticle(params['article']);
+            }
         });
 
     }
@@ -75,7 +78,8 @@ export class NewArticleComponent implements OnInit {
 
     onSubmitArticleForm() {
         if (!this.articleFormControl.touched || !this.articleFormControl.valid) return;
-        let articleToAdd: AddArticleApiModel = {
+        this.loading = true;
+        let targetArticle: AddArticleApiModel = {
             title: this.articleFormControl.controls.title.value,
             description: this.articleFormControl.controls.description.value,
             body: this.articleFormControl.controls.body.value,
@@ -83,13 +87,28 @@ export class NewArticleComponent implements OnInit {
         }
 
         this.tags.forEach((i) => {
-            if (i.active) articleToAdd.tagList.push(i.text);
+            if (i.active) targetArticle.tagList.push(i.text);
         });
 
-        this.articlesService.addArticles(articleToAdd).subscribe((result: any) => {
-            this.toastService.success("Well done! Article created successfuly");
-            this.router.navigate(["articles"])
-        });
+        if (!this.articleSlug) {
+            this.articlesService.addArticles(targetArticle).subscribe((result: any) => {
+                this.toastService.success("Well done! Article created successfuly");
+                this.router.navigate(["articles"]);
+                this.loading = false;
+            }, (error) => {
+                if (error.message) this.toastService.error(error.message);
+                this.loading = false;
+            });
+        } else {
+            this.articlesService.updateArticles(targetArticle, this.articleSlug).subscribe((result: any) => {
+                this.toastService.success("Well done! Article updated successfuly");
+                this.router.navigate(["articles"]);
+                this.loading = false;
+            }, (error) => {
+                if (error.message) this.toastService.error(error.message);
+                this.loading = false;
+            });
+        }
     }
 
     checkTag(tag: TagsModel, event: any): void {
@@ -98,12 +117,27 @@ export class NewArticleComponent implements OnInit {
     }
 
     getArticle(articleSlug: string) {
+        this.loading = true;
         this.articlesService.getArticle(articleSlug).subscribe((result: { article: ArticleModel }) => {
+
             this.articleFormControl.patchValue({
                 title: result.article.title,
                 description: result.article.description,
                 body: result.article.body
             });
+
+            if (
+                result.article.tagList && result.article.tagList.length > 0 &&
+                this.tags && this.tags.length > 0
+            ) {
+                result.article.tagList.forEach(articleTag => {
+                    this.tags.map(tag => {
+                        if (tag.text === articleTag) tag.active = true;
+                    })
+                });
+            }
+
+            this.loading = false;
         });
     }
 

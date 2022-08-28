@@ -27,6 +27,10 @@ export class ArticlesService {
     return this.apiService.post(this.articlesControllerUrl, { article: article })
   }
 
+  updateArticles(article: AddArticleApiModel, articleSlug: string): Observable<any> {
+    return this.apiService.put(this.articlesControllerUrl + articleSlug, { article: article })
+  }
+
   delArticles(article: ArticleModel): Observable<any> {
     return this.apiService.delete(this.articlesControllerUrl + article.slug, {})
   }
